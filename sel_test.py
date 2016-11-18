@@ -33,6 +33,29 @@ password.send_keys(Keys.RETURN)
 
 driver.get('http://s4.zetaboards.com/The_Daily_Happening/topic/10094890/294/?x=90')
 
+#may also be "browser.current_url"
+curr_page = driver.current_url
+#assumes the topic identifier is 7 characters. For example 'topic/9991030/' = 14 characters.
+start = curr_page.find('topic/') + 14
+end = curr_page.find('/?x=') - len(curr_page) 
+page_num = curr_page_num[start:end]
+prev_page = curr_url[:start] + str(int(curr_page_num) - 1) + curr_url[end:]
+
+driver.get(prev_page)
+
+#453 refers to the 90th post in a page
+Post = '//*[@id="topic_viewer"]/tbody/tr[448]/td[2]'
+LikeID = driver.find_element_by_xpath(Post + "/span/div[@class='likebg']").get_attribute('id')
+PostID = LikeID[-8:]
+PostDate = driver.find_element_by_xpath('//*[@id="post-' + PostID + '"]/td[2]/span[1]').text
+#if the date is either today or yesterday
+if PostDate[:3] in ("yes", "tod"):
+	#go back a page
+elif 
+
+
+
+###RECORD LIKES IN CURRENT PAGE
 while True:
 	try:
 		create_table()
@@ -47,7 +70,6 @@ while True:
 			if Style == 'display = none;':
 				pass
 			else:
-				#Need to confirm: does like ID refer to a single like, or a the string of all likes in a single post?
 				LikeID = driver.find_element_by_xpath(Post + "/span/div[@class='likebg']").get_attribute('id')
 				LikeID2 = LikeID[4: ]
 				PostID = LikeID[-8:]
@@ -203,10 +225,11 @@ while True:
 	except:
 		break
 
+
+c.close
 conn.close
 
 '''
-
 for i in range(0,100)
     Try 
 		if driver.find_element_by_xpath('//*[@id="inlinetopic"]/table/tbody/tr[' + str(i) + ']/td[2]').text = "Title":
@@ -217,15 +240,12 @@ for i in range(0,100)
 	if i = 100 then
 		quit()
 		
-
 for i in range(first_thread,92)
 	#driver.find_element_by_xpath('//*[@id="inlinetopic"]/table/tbody/tr[' + str(i) + ']/td[2]/ul/li[4]/a').get_attribute('href')
 	driver.find_element_by_xpath('//*[@id="inlinetopic"]/table/tbody/tr[' + str(i) + ']/td[2]/ul/li[4]/a').click()
 	#
 	
-
     
-
 
 convert postdate to consistent format (i.e. convert "yesterday" and "today" into dates)
 Note that thread-link can be extracted from the post-link in the future if you would like to see which threads different users get likes in.
@@ -243,13 +263,50 @@ Most recent post in a thread is text from '//*[@id="inlinetopic"]/table/tbody/tr
 if we find the oldest-like, we could then check the date value of the most-recent thread against it, and stop looking through threads once you reach a thread whose newest post is too old.
 
 Open last page of thread
-Go back one page if possible (to force last-post to be #90. last post of last page is unknown, so it would be tricky to check its date)
 create a variable to remember the last page number
+Go back one page if possible (to force last-post to be #90. last post of last page is unknown, so it would be tricky to check its date)
 check date of last post
 if date is within 2months+2days, go back a page (modify url to lower page number, unless it is already on page 1 (determine by url-name rather than finding element))
 keep going back until the last post is too old.
 go to the next page.
 loop through all posts
 keep going through pages (by modifying url) until last page is reached. 
+
+#PostDate = 'One minute ago'
+#PostDate = 'Today, 11:34 pm'
+#PostDate = 'Yesterday, 10:34 pm'
+PostDate = 'Nov 8 2016, 11:03 PM'
+
+comma_pos = PostDate.find(',')
+if PostDate[:3] in ("Yes", "Tod"):
+    time = PostDate[comma_pos+2:len(PostDate)-3]
+    #find length. go from 2 positions after the comma to the fourth-last character to get time.
+    #last 2 letters =am/pm
+#Assume that no comma means that the format is either "One minute ago" or "x minutes ago"
+elif comma_pos == -1:
+    if len(PostDate) == 13:
+        time = PostDate[:1]
+    elif PostDate[:3] == "One":
+        time = 1
+    else:
+        time = PostDate[:2]
+#mmm d yyyy,
+elif comma_pos == 10:
+    month = PostDate[:3]
+    day = PostDate[4:5]
+    year = PostDate[6:10]
+    time = PostDate[12:len(PostDate)-3]
+#mmm dd yyyy,
+elif comma_pos == 11:
+    month = PostDate[:3]
+    day = PostDate[4:6]
+    year = PostDate[7:11]
+    time = PostDate[13:len(PostDate)-3]
+
+print(time)
+print(day)
+print(month)
+print(year)
+print(str(datetime.datetime.now().time())[:3])
 
 '''
