@@ -216,9 +216,13 @@ for i in range(0,100)
         pass
 	if i = 100 then
 		quit()
+		
 
 for i in range(first_thread,92)
-	driver.find_element_by_xpath('//*[@id="inlinetopic"]/table/tbody/tr[' + str(i) + ']/td[2]/ul/li[4]/a').get_attribute('href')
+	#driver.find_element_by_xpath('//*[@id="inlinetopic"]/table/tbody/tr[' + str(i) + ']/td[2]/ul/li[4]/a').get_attribute('href')
+	driver.find_element_by_xpath('//*[@id="inlinetopic"]/table/tbody/tr[' + str(i) + ']/td[2]/ul/li[4]/a').click()
+	#
+	
 
     
 
