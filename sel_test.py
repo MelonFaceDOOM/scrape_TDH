@@ -4,6 +4,8 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
+from datetime import datetime
+from time import strptime
 import sqlite3
 
 path = 'D:\Python\TDHbase.db'
@@ -240,13 +242,95 @@ for i in range(0,100)
 	if i = 100 then
 		quit()
 		
-for i in range(first_thread,92)
-	#driver.find_element_by_xpath('//*[@id="inlinetopic"]/table/tbody/tr[' + str(i) + ']/td[2]/ul/li[4]/a').get_attribute('href')
-	driver.find_element_by_xpath('//*[@id="inlinetopic"]/table/tbody/tr[' + str(i) + ']/td[2]/ul/li[4]/a').click()
-	#
-	
-    
+while True:
 
+Jul 18 2016, 09:57 PM (21)
+Jul 7 2016, 02:15 AM (20)
+Yesterday, 1:54 AM (18)
+Yesterday, 11:54 PM (19)
+Today, 5:38 PM (14)
+Today, 10:31 AM (15)
+33 minutes ago (14)
+3 minutes ago (13)
+One minute ago (14)
+
+if postdate[:9]=='Yesterday':
+	if len(postdate) == 18:
+		if postdate[-2:] == AM:
+			Year = str(datetime.datetime.now()[:4])
+			Month = str(datetime.datetime.now()[5:7]) 
+			Day = str(datetime.datetime.now()[8:10]) 
+			Hour = str(datetime.datetime.now()[11:13]) 
+			Minute = str(datetime.datetime.now()[14:16]) 
+		elif postdate[-2:] == PM:
+			
+	elif len(postdate) == 19:
+		if postdate[-2:] == AM:
+			
+		elif postdate[-2:] == PM:
+			
+elif postdate[:5]=='Today':
+	if len(postdate) == 14:
+		if postdate[-2:] == AM:
+			
+		elif postdate[-2:] == PM:
+			
+	elif len(postdate) == 15:
+		if postdate[-2:] == AM:
+			
+		elif postdate[-2:] == PM:
+			
+elif len(postdate) = 20:
+	if postdate[-2:] == AM:
+		
+	elif postdate[-2:] == PM:
+		
+elif len(postdate) = 21:
+	if postdate[-2:] == AM:
+		
+	elif postdate[-2:] == PM:
+		
+elif postdate[:3] == 'One':
+	Year = str(datetime.datetime.now()[:4])
+	Month = str(datetime.datetime.now()[5:7]) 
+	Day = str(datetime.datetime.now()[8:10]) 
+	Hour = str(datetime.datetime.now()[11:13]) 
+	Minute = str(datetime.datetime.now()[14:16]) 
+	Minutes_ago = 1
+elif len(postdate) == 13:
+	Minutes_ago = int(postdate[:1])
+elif len(postdate) == 14:
+	Minutes_ago = int(postdate[:2])
+
+jan
+feb
+mar
+apr
+may
+jun
+jul
+aug
+sep
+oct
+nov
+dec
+
+
+
+
+
+Lastpost_month = striptime(Lastpost_date[:3], '%b').tm_mon
+
+for i in range(first_thread,92)
+	Lastpost_date = driver.find_element_by_xpath('//*[@id="inlinetopic"]/table/tbody/tr[' + str(i) + ']/td[6]/div').text
+	If Lastpost_date 
+	Threads = []
+	Threads.append(driver.find_element_by_xpath('//*[@id="inlinetopic"]/table/tbody/tr[' + str(i) + ']/td[2]/ul/li[4]/a').get_attribute('href'))
+
+For Thread in Threads
+	driver.get(Thread)
+	
+	
 convert postdate to consistent format (i.e. convert "yesterday" and "today" into dates)
 Note that thread-link can be extracted from the post-link in the future if you would like to see which threads different users get likes in.
 add ability to loop through multiple pages of a given thread
